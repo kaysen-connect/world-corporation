@@ -13,48 +13,43 @@
       --muted: rgba(255,255,255,0.85);
       --radius: 18px;
       --max-width: 980px;
+      --bg-color: #5a8dee; /* Static blue background color */
+      --dropdown-bg: rgba(30, 30, 60, 0.85); /* New darker background for dropdown */
+      --dropdown-hover: rgba(255, 255, 255, 0.15); /* Lighter hover background */
     }
 
     *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0;
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 24px;
       font-family: "Inter", system-ui, sans-serif;
-      color:var(--accent);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      padding:24px;
-      background: linear-gradient(270deg, #ffecd2, #fcb69f, #a1c4fd, #c2e9fb);
-      background-size: 800% 800%;
-      animation: bgAnimation 20s ease infinite;
-      background-attachment: fixed;
-      line-height:1.35;
-    }
-
-    @keyframes bgAnimation {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
+      color: var(--accent);
+      line-height: 1.35;
+      min-height: 100vh;
+      background-color: var(--bg-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .wrap{
-      width:100%;
-      max-width:var(--max-width);
-      display:flex;
-      align-items:center;
-      justify-content:center;
+      width: 100%;
+      max-width: var(--max-width);
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .card{
-      width:100%;
+      width: 100%;
       background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
       backdrop-filter: blur(6px) saturate(120%);
       border-radius: var(--radius);
       padding: clamp(20px, 4.5vw, 48px);
-      display:flex;
+      display: flex;
       gap: clamp(16px, 3.5vw, 36px);
-      align-items:center;
+      align-items: center;
       box-shadow: 0 10px 30px rgba(0,0,0,0.14);
       border: 1px solid rgba(255,255,255,0.08);
       opacity: 0;
@@ -70,25 +65,25 @@
     }
 
     .visual{
-      flex:0 0 auto;
+      flex: 0 0 auto;
       width: clamp(72px, 18vw, 160px);
-      display:flex;
-      align-items:center;
-      justify-content:center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
-    .content{ flex:1 1 auto; min-width:0; }
+    .content{ flex: 1 1 auto; min-width: 0; }
 
     h1{
-      margin:0 0 8px 0;
-      font-weight:700;
+      margin: 0 0 8px 0;
+      font-weight: 700;
       font-size: clamp(1.25rem, 4vw, 2.25rem);
       letter-spacing: -0.02em;
-      line-height:1.05;
-      color:var(--accent);
-      display:flex;
-      align-items:center;
-      gap:12px;
+      line-height: 1.05;
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      gap: 12px;
       animation: revealLoop 3s ease-in-out infinite;
     }
 
@@ -100,8 +95,8 @@
     }
 
     p.lead{
-      margin:0 0 18px 0;
-      color:var(--muted);
+      margin: 0 0 18px 0;
+      color: var(--muted);
       font-size: clamp(0.95rem, 2.4vw, 1.05rem);
     }
 
@@ -127,18 +122,18 @@
     }
 
     .cta-row{
-      display:flex;
-      gap:12px;
-      flex-wrap:wrap;
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
     }
     .btn{
-      border:0;
-      cursor:pointer;
-      padding:10px 16px;
-      border-radius:12px;
-      font-weight:600;
+      border: 0;
+      cursor: pointer;
+      padding: 10px 16px;
+      border-radius: 12px;
+      font-weight: 600;
       background: linear-gradient(90deg, rgba(255,255,255,0.12), rgba(255,255,255,0.06));
-      color:var(--accent);
+      color: var(--accent);
       box-shadow: 0 6px 18px rgba(0,0,0,0.12);
       transition: transform .18s ease, box-shadow .18s ease, background .18s ease;
     }
@@ -162,11 +157,11 @@
     .dropdown-content {
       display: none;
       position: absolute;
-      background: rgba(255,255,255,0.08);
+      background: var(--dropdown-bg);
       backdrop-filter: blur(8px);
       border-radius: 12px;
       min-width: 180px;
-      box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.3);
       z-index: 1;
       margin-top: 6px;
       overflow: hidden;
@@ -179,7 +174,7 @@
       transition: background 0.2s;
     }
     .dropdown-content a:hover {
-      background: rgba(255,255,255,0.18);
+      background: var(--dropdown-hover);
     }
     .dropdown.show .dropdown-content {
       display: block;
@@ -193,9 +188,9 @@
     .muted { color: var(--muted); font-size: .9rem; }
 
     .icon {
-      width:100%;
-      max-width:120px;
-      display:block;
+      width: 100%;
+      max-width: 120px;
+      display: block;
       filter: drop-shadow(0 8px 18px rgba(0,0,0,0.18));
       animation: float 4s ease-in-out infinite;
     }
@@ -211,15 +206,15 @@
     }
 
     @media (max-width:720px){
-      .card{ flex-direction:row; align-items:center; gap:16px; padding:20px; }
-      .visual{ width:86px; }
+      .card{ flex-direction: row; align-items: center; gap: 16px; padding: 20px; }
+      .visual{ width: 86px; }
     }
     @media (max-width:520px){
-      .card{ flex-direction:column; text-align:center; padding:18px; gap:14px; }
-      .visual{ width:120px; }
-      .content{ width:100% }
-      .cta-row{ justify-content:center }
-      h1{ justify-content:center }
+      .card{ flex-direction: column; text-align: center; padding: 18px; gap: 14px; }
+      .visual{ width: 120px; }
+      .content{ width: 100% }
+      .cta-row{ justify-content: center }
+      h1{ justify-content: center }
     }
   </style>
 </head>
@@ -255,15 +250,15 @@
         <div class="cta-row" style="margin-top:6px">
           <!-- Services dropdown -->
           <div class="dropdown" id="servicesDropdown">
-            <button class="btn primary" onclick="toggleDropdown()">SERVICES ▾</button>
+            <button class="btn primary" onclick="toggleDropdown()" aria-haspopup="true" aria-expanded="false">SERVICES ▾</button>
             <div class="dropdown-content">
-              <a href="#internet">Events(wedding, anniversaire, graduation,...)</a>
-              <a href="#installation">Camera(photo shoot, image, editing,...)</a>
-              <a href="#support">Makeup(all ceremony)</a>
+              <a href="#internet">Events</a>
+              <a href="#installation">Camera</a>
+              <a href="#support">Makeup</a>
               <a href="#contact">Hair braider</a>
-              <a href="#contact">Usher(all service)</a>
-              <a href="#contact">Catering(all service)</a>
-              <a href="#contact">Decor(all service)</a>
+              <a href="#contact">Usher</a>
+              <a href="#contact">Catering</a>
+              <a href="#contact">Decoration</a>
               <a href="#contact">Home Designer</a>
             </div>
           </div>
@@ -271,25 +266,19 @@
           <!-- Learn more button -->
           <button class="btn" onclick="onSecondary()">Learn more</button>
         </div>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <p class="muted" style="margin-top:14px">Galois copyright 2025</p>
+        <p class="muted" style="margin-top:40px">Galois copyright 2025</p>
       </div>
     </article>
   </div>
 
   <script>
     function toggleDropdown() {
-      document.getElementById("servicesDropdown").classList.toggle("show");
+      const dropdown = document.getElementById("servicesDropdown");
+      dropdown.classList.toggle("show");
+
+      const btn = dropdown.querySelector("button");
+      const expanded = btn.getAttribute("aria-expanded") === "true";
+      btn.setAttribute("aria-expanded", !expanded);
     }
 
     function onSecondary(){
@@ -301,9 +290,20 @@
       if (!e.target.matches('.btn.primary')) {
         document.querySelectorAll(".dropdown.show").forEach(function(el){
           el.classList.remove("show");
+          const btn = el.querySelector("button");
+          if (btn) btn.setAttribute("aria-expanded", "false");
         });
       }
     }
+
+    // Close dropdown on ESC key
+    window.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") {
+        document.querySelectorAll(".dropdown.show").forEach(el => el.classList.remove("show"));
+        const btn = document.querySelector(".dropdown button[aria-expanded='true']");
+        if (btn) btn.setAttribute("aria-expanded", "false");
+      }
+    });
   </script>
 </body>
 </html>
