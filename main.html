@@ -202,51 +202,17 @@
       100% { transform: translateY(0) rotate(-2deg); }
     }
 
-    /* Booking date/time input styling */
-    .booking {
-      display: none; /* hidden initially */
-      flex-direction: column;
-      color: var(--accent);
-      font-weight: 600;
-      font-size: 0.9rem;
-      min-width: 200px;
-    }
-    .booking.active {
-      display: flex;
-    }
-    .booking label {
-      margin-bottom: 4px;
-    }
-    .booking input[type="datetime-local"] {
-      border: none;
-      border-radius: 12px;
-      padding: 10px 12px;
-      background: rgba(255,255,255,0.12);
-      color: var(--accent);
-      font-family: inherit;
-      font-weight: 600;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.12);
-      transition: background 0.2s ease;
-      cursor: pointer;
-    }
-    .booking input[type="datetime-local"]:focus {
-      background: rgba(255,255,255,0.25);
-      outline: none;
-      box-shadow: 0 6px 18px rgba(0,0,0,0.24);
+    /* Hide the hidden datetime input */
+    #hiddenDatetime {
+      position: absolute;
+      left: -9999px;
+      opacity: 0;
+      pointer-events: none;
     }
 
-    .selected-service {
-      margin-bottom: 6px;
-      font-weight: 700;
-      font-size: 1rem;
-      color: var(--accent);
-    }
-
-    /* Responsive tweaks */
     @media (max-width:720px){
       .card{ flex-direction: row; align-items: center; gap: 16px; padding: 20px; }
       .visual{ width: 86px; }
-      .booking { min-width: 160px; }
     }
     @media (max-width:520px){
       .card{ flex-direction: column; text-align: center; padding: 18px; gap: 14px; }
@@ -254,7 +220,6 @@
       .content{ width: 100% }
       .cta-row{ justify-content: center }
       h1{ justify-content: center }
-      .booking { min-width: 100%; }
     }
   </style>
 </head>
@@ -303,12 +268,8 @@
             </div>
           </div>
 
-          <!-- Booking date and time picker -->
-          <div class="booking" id="bookingPicker">
-            <div class="selected-service" id="selectedServiceName"></div>
-            <label for="booking-datetime">Booking Date & Time</label>
-            <input type="datetime-local" id="booking-datetime" name="booking-datetime" />
-          </div>
+          <!-- Hidden datetime input for popup -->
+          <input type="datetime-local" id="hiddenDatetime" />
 
           <!-- Learn more button -->
           <button class="btn" onclick="onSecondary()">Learn more</button>
@@ -352,23 +313,38 @@
       }
     });
 
-    // Show booking picker after selecting service
+    // Show native datetime picker popup after selecting service
     document.querySelectorAll('.dropdown-content a').forEach(link => {
       link.addEventListener('click', function(event) {
         event.preventDefault();
-
-        const serviceName = this.dataset.service;
-        const booking = document.getElementById('bookingPicker');
-        const selectedName = document.getElementById('selectedServiceName');
-
-        // Show booking picker and update service name
-        selectedName.textContent = `Booking for: ${serviceName}`;
-        booking.classList.add('active');
 
         // Close dropdown
         const dropdown = document.getElementById("servicesDropdown");
         dropdown.classList.remove("show");
         dropdown.querySelector("button").setAttribute("aria-expanded", "false");
+
+        // Show native datetime picker popup
+        const datetimeInput = document.getElementById('hiddenDatetime');
+
+        // Reset value so popup always shows (some browsers require this)
+        datetimeInput.value = '';
+
+        // Focus and open picker
+        datetimeInput.focus();
+
+        // For some browsers, input.showPicker() works (Chrome 94+), fallback if not:
+        if (typeof datetimeInput.showPicker === "function") {
+          datetimeInput.showPicker();
+        } else {
+          // fallback: clicking to open native picker
+          datetimeInput.click();
+        }
+
+        // Optional: You can handle the selected datetime value with an event listener:
+        datetimeInput.onchange = function() {
+          alert(`You picked: ${datetimeInput.value}`);
+          // Do something with datetimeInput.value here if needed
+        }
       });
     });
   </script>
